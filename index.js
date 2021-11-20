@@ -2,6 +2,7 @@ const { Client, Intents, Collection } = require('discord.js');
 const { readdirSync } = require('fs');
 const mongoose = require('mongoose');
 const tenor = require('tenorjs');
+const { colors } = require('./Utils/config');
 const intents = Intents.FLAGS;
 
 const client = new Client({
@@ -36,5 +37,38 @@ mongoose.connect(process.env.mongodbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+process.on('unhandledRejection', (err) => {
+  await error(err);
+});
+
+process.on('uncaughtException', (err) => {
+  await error(err);
+});
+
+async function error(error) {
+  const stack = error.stack.replaceAll('\n', '').split(/ +/g);
+  const position = stack.indexOf('Object.run');
+
+  const errorsChannel = client.channels.cache.get('911568304022384640');
+
+  const embed = new MessageEmbed()
+    .setTitle('Ошибка')
+    .setColor(colors.error)
+    .addFields([
+      { name: 'Сообщение:', value: `${error}` },
+      {
+        name: 'Файл:',
+        value: `${stack[position + 1].replaceAll('(', '').replaceAll(')', '')}`,
+      },
+    ]);
+
+  console.error(
+    chalk.red(`[${stack[0].replaceAll(':', '')}] ` + chalk.white(error.stack)),
+    error
+  );
+
+  errorsChannel.send({ embeds: [embed] });
+}
 
 client.login(process.env.token);
