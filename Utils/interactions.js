@@ -60,7 +60,7 @@ module.exports = [
       },
     ],
     member: true,
-    locales: { en: 'hit', ru: 'ударяет' },
+    locales: { en: 'hits', ru: 'ударяет' },
   },
   {
     name: 'kiss',
@@ -80,5 +80,23 @@ module.exports = [
     ],
     member: true,
     locales: { en: 'kisses', ru: 'целует' },
+  },
+  {
+    name: 'angry',
+    description: 'Angry without or at a member',
+    category: 'roleplay',
+    options: [
+      {
+        type: 'USER',
+        name: 'member',
+        description: 'The member you want angry at',
+      },
+      {
+        type: 'STRING',
+        name: 'words',
+        description: 'The words you want to say',
+      },
+    ],
+    locales: { en: 'angry at', ru: 'злиться на' },
   },
 ];
