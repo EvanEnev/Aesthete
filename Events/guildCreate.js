@@ -16,7 +16,7 @@ module.exports = {
       .first();
     highestChannel.send({
       content:
-        'Hey, thanks for adding me !\nMy name is **Aesthete** and I was created for role-playing right in the Discord.\nFor list of my commands type `/` in a text channel.\n\nПривет, спасибо, что добавил меня !\nМеня зовут Эстет и я был создан для роллплей-действий прямо в Дискорде.\nЧтобы узнать мои команды, просто пропиши / в текстовом канале. \n\n\nTo change bots language use `/config language` command\nЧтобы изменить язык бота используй команду `/config language`',
+        'Hey, thanks for adding me !\nMy name is **Aesthete** and I was created for role-playing right in the Discord.\nFor list of my commands type `/` in a text channel.\n\nПривет, спасибо, что добавил меня !\nМеня зовут Эстет и я был создан для роллплей-действий прямо в Дискорде.\nЧтобы узнать мои команды, просто пропиши `/` в текстовом канале. \n\n\nTo change bots language use `/config language` command\nЧтобы изменить язык бота используй команду `/config language`',
     });
   },
 };
