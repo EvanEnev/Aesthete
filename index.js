@@ -39,14 +39,14 @@ mongoose.connect(process.env.mongodbUrl, {
 });
 
 process.on('unhandledRejection', (err) => {
-  await error(err);
+  error(err);
 });
 
 process.on('uncaughtException', (err) => {
-  await error(err);
+  error(err);
 });
 
-async function error(error) {
+function error(error) {
   const stack = error.stack.replaceAll('\n', '').split(/ +/g);
   const position = stack.indexOf('Object.run');
 
