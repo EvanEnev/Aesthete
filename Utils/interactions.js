@@ -44,6 +44,25 @@ module.exports = [
     locales: { en: 'hugs', ru: 'обнимает' },
   },
   {
+    name: 'kill',
+    description: 'Kill a member',
+    category: 'roleplay',
+    options: [
+      {
+        type: 'USER',
+        name: 'member',
+        description: 'The member you want to kill',
+      },
+      {
+        type: 'STRING',
+        name: 'words',
+        description: 'The words you want to say',
+      },
+    ],
+    member: true,
+    locales: { en: 'kills', ru: 'убивает' },
+  },
+  {
     name: 'hit',
     description: 'Hit a member',
     category: 'roleplay',
