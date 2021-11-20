@@ -33,7 +33,12 @@ module.exports = {
 
     if (channel) {
       if (
-        !channel.permissionsFor(interaction.client.user.id).has('SEND_MESSAGES')
+        !(
+          channel
+            .permissionsFor(interaction.client.user.id)
+            .has('SEND_MESSAGES') &&
+          channel.permissionsFor(interaction.client.user.id).has('VIEW_CHANNEL')
+        )
       ) {
         return interaction.replied
           ? interaction.followUp({
