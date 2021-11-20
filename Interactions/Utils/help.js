@@ -29,7 +29,7 @@ module.exports = {
         .setLabel(localization.voteForBot[locale]),
       new MessageButton()
         .setStyle('LINK')
-        .setURL('https://youtu.be/dQw4w9WgXcQ')
+        .setURL('https://github.com/EvanEnev/Aesthete')
         .setLabel('GitHub')
     );
 
