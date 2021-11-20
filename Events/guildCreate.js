@@ -9,9 +9,11 @@ module.exports = {
       .filter(
         (channel) =>
           channel.permissionsFor(guild.client.user.id).has('SEND_MESSAGES') &&
-          channel.permissionsFor(guild.client.user.id).has('VIEW_CHANNEL')
+          channel.permissionsFor(guild.client.user.id).has('VIEW_CHANNEL') &&
+          channel.type === 'GUILD_TEXT'
       )
-      .sort((a, b) => a - b);
+      .sort((a, b) => a - b)
+      .first();
     highestChannel.send({
       content:
         'Hey, thanks for adding me !\nMy name is **Aesthete** and I was created for role-playing right in the Discord.\nFor list of my commands type `/` in a text channel.\n\nTo change bots language use `/config language` command\nЧтобы изменить язык бота используй команду `/config language`',
