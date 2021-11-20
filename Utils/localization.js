@@ -1,6 +1,6 @@
 module.exports = {
   description: {
-    ru: 'Привет !\nМеня зовут **Эстет** и я создан для отыгрывания ролплей-действий прямо в Дискорде.\nЧтобы узнать мои команды просто пропиши `/`в текстовый канал.\n\nЧтобы изменить язык бота используй команду `/config language`\nTo change bots language use `/config language` command',
+    ru: 'Привет !\nМеня зовут **Эстет** и я создан для отыгрывания ролплей-действий прямо в Дискорде.\nЧтобы узнать мои команды просто пропиши `/` в текстовый канал.\n\nЧтобы изменить язык бота используй команду `/config language`\nTo change bots language use `/config language` command',
     en: 'Hi !\nMy name is **Aesthet** and I was creatod for role-playing right in the Discord.\nFor list of my commands type `/` in a text channel.\n\nTo change bots language use `/config language` command\nЧтобы изменить язык бота используй команду `/config language',
   },
   inviteBot: {
@@ -17,8 +17,8 @@ module.exports = {
     en: '**Action successfully submitted**',
   },
   channelChanged: {
-    ru: '**Теперь я буду отправлять сообщения с ролплей-действиями в **',
-    en: '**Since now I will send role-play messages in **',
+    ru: '**Теперь я буду отправлять сообщения с ролплей-действиями в**',
+    en: '**Since now I will send role-play messages in**',
   },
   languageChanged: {
     ru: '**Теперь я буду этот язык: **',
