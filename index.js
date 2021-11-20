@@ -1,4 +1,5 @@
-const { Client, Intents, Collection } = require('discord.js');
+const chalk = require('chalk');
+const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
 const mongoose = require('mongoose');
 const tenor = require('tenorjs');
