@@ -3,6 +3,7 @@ const commandsData = require('../Utils/interactions');
 module.exports = {
   name: 'interactionCreate',
   async run(interaction, client) {
+    if (!interaction.guild) return;
     if (interaction.isButton()) {
       const button = client.buttons.get(interaction.customId);
       if (!button) return;
