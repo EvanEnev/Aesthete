@@ -51,9 +51,11 @@ module.exports = {
       channel = interaction.guild.channels.cache.get(channelId);
     }
 
-    let content = `${interaction.member} ${commandData.locales[locale]}`;
+    const splittedLocales = commandData.locales[locale].split(' ');
+
+    let content = `${interaction.member} ${splittedLocales[0]}`;
     if (member) {
-      content += ` ${member}`;
+      content += ` ${splittedLocales[1]} ${member}`;
     }
 
     if (words) {
