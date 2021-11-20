@@ -82,6 +82,51 @@ module.exports = [
     locales: { en: 'hits', ru: 'ударяет' },
   },
   {
+    name: 'cry',
+    description: 'Cry yourself.',
+    category: 'roleplay',
+    options: [  
+      {
+        type: 'STRING',
+        name: 'words',
+        description: 'The words you want to say',
+      },
+    ],
+    locales: { en: 'crying', ru: 'плачет' },
+  },
+  {
+    name: 'laugh',
+    description: 'Have a laugh.',
+    category: 'roleplay',
+    options: [  
+      {
+        type: 'STRING',
+        name: 'words',
+        description: 'The words you want to say',
+      },
+    ],
+    locales: { en: 'laughs', ru: 'смеется' },
+  },
+  {
+    name: 'bite',
+    description: 'Bite a member',
+    category: 'roleplay',
+    options: [
+      {
+        type: 'USER',
+        name: 'member',
+        description: 'The member you want to bite',
+      },
+      {
+        type: 'STRING',
+        name: 'words',
+        description: 'The words you want to say',
+      },
+    ],
+    member: true,
+    locales: { en: 'bites', ru: 'кусает' },
+  },
+  {
     name: 'kiss',
     description: 'Kiss a member',
     category: 'roleplay',
@@ -99,6 +144,25 @@ module.exports = [
     ],
     member: true,
     locales: { en: 'kisses', ru: 'целует' },
+  },
+  {
+    name: 'pat',
+    description: 'Pat a member',
+    category: 'roleplay',
+    options: [
+      {
+        type: 'USER',
+        name: 'member',
+        description: 'The member you want to pat',
+      },
+      {
+        type: 'STRING',
+        name: 'words',
+        description: 'The words you want to say',
+      },
+    ],
+    member: true,
+    locales: { en: 'pats', ru: 'гладит' },
   },
   {
     name: 'angry',
