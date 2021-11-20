@@ -56,7 +56,7 @@ module.exports = {
         channel
           .permissionsFor(interaction.client.user.id)
           .has('VIEW_CHANNEL') &&
-        channel.permissionsFor(interaction.client.user.id).has('SEND_MESSAGE')
+        channel.permissionsFor(interaction.client.user.id).has('SEND_MESSAGES')
       )
     ) {
       return interaction.reply({
