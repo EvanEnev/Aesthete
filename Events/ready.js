@@ -5,6 +5,6 @@ module.exports = {
   name: 'ready',
   async run(client) {
     console.log(chalk.blue("I'm Ready"));
-    await client.commands.set(command);
+    await client.applications.commands.set(command);
   },
 };
