@@ -20,6 +20,7 @@ module.exports = {
         content:
           localization.missingPermissions[locale] +
           localization.permissions.manageGuild[locale],
+        ephemeral: true,
       });
 
     const channel = interaction.options.getChannel('channel'),
@@ -56,15 +57,10 @@ module.exports = {
         { upsert: true }
       );
 
-      interaction.replied
-        ? await interaction.followUp({
-            content: `${localization.channelChanged[locale]} ${channel}`,
-            ephemeral: true,
-          })
-        : await interaction.reply({
-            content: `${localization.channelChanged[locale]} ${channel}`,
-            ephemeral: true,
-          });
+      await interaction.reply({
+        content: `${localization.channelChanged[locale]} ${channel}`,
+        ephemeral: true,
+      });
     }
     if (language) {
       const splitted = language.split(' ');
