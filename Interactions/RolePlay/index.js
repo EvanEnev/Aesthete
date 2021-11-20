@@ -55,7 +55,9 @@ module.exports = {
 
     let content = `${interaction.member} ${splittedLocales[0]}`;
     if (member) {
-      content += ` ${splittedLocales[1]} ${member}`;
+      splittedLocales[1]
+        ? (content += ` ${splittedLocales[1]} ${member}`)
+        : (content += ` ${member}`);
     }
 
     if (words) {
