@@ -51,6 +51,20 @@ module.exports = {
       channel = interaction.guild.channels.cache.get(channelId);
     }
 
+    if (
+      !(
+        channel
+          .permissionsFor(interaction.client.user.id)
+          .has('VIEW_CHANNEL') &&
+        channel.permissionsFor(interaction.client.user.id).has('SEND_MESSAGE')
+      )
+    ) {
+      return interaction.reply({
+        content: localization.errors.cannotSendMessages[locale],
+        ephemeral: true,
+      });
+    }
+
     const splittedLocales = commandData.locales[locale].split(' ');
 
     let content = `${interaction.member} ${splittedLocales[0]}`;
