@@ -19,7 +19,8 @@ module.exports = [
       {
         type: 'CHANNEL',
         name: 'channel',
-        description: 'When bot should send all role-play messages',
+        description:
+          'When the bot should send all role-play messages (reset if empty)',
         channelTypes: ['GUILD_TEXT'],
       },
     ],
@@ -85,7 +86,7 @@ module.exports = [
     name: 'cry',
     description: 'Cry yourself.',
     category: 'roleplay',
-    options: [  
+    options: [
       {
         type: 'STRING',
         name: 'words',
@@ -98,7 +99,7 @@ module.exports = [
     name: 'laugh',
     description: 'Have a laugh.',
     category: 'roleplay',
-    options: [  
+    options: [
       {
         type: 'STRING',
         name: 'words',

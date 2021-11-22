@@ -25,12 +25,6 @@ module.exports = {
 
     const channel = interaction.options.getChannel('channel'),
       language = interaction.options.getString('language');
-    if (!(channel || language)) {
-      return interaction.reply({
-        content: localization.errors.noConfigOptions[locale],
-        ephemeral: true,
-      });
-    }
 
     if (channel) {
       if (
@@ -62,6 +56,7 @@ module.exports = {
         ephemeral: true,
       });
     }
+
     if (language) {
       const splitted = language.split(' ');
       const localeCode = splitted[0],
@@ -93,6 +88,19 @@ module.exports = {
             content: localization.languageChanged[localeCode] + languageName,
             ephemeral: true,
           });
+    }
+
+    if (!(language && channel)) {
+      await Settings.findOneAndUpdate(
+        { _id: interaction.guild.id },
+        { $unset: { rolePlayChannelID: '' } },
+        { upsert: true }
+      );
+
+      await interaction.reply({
+        content: localization.channelReseted[locale],
+        ephemeral: true,
+      });
     }
   },
 };

@@ -20,6 +20,10 @@ module.exports = {
     ru: '**Теперь я буду отправлять сообщения с ролплей-действиями в**',
     en: '**Since now I will send role-play messages in**',
   },
+  channelReseted: {
+    ru: '**Канал для ролплей-действий сброшен**',
+    en: '**Channel for role-play actions reseted**',
+  },
   languageChanged: {
     ru: '**Теперь я буду этот язык: **',
     en: '**Since now I will use this language: **',
@@ -36,10 +40,6 @@ module.exports = {
     rolePlayeWithYourself: {
       ru: '**Нельзя совершить ролплей-действие с собой**',
       en: '**You cannot use role-play action with yourself**',
-    },
-    noConfigOptions: {
-      ru: '**Необходимо указать категорию конфигурации**',
-      en: '**You should specific what you want to configure**',
     },
     cannotSendMessages: {
       ru: '**Я не могу отправлять сообщения в этот канал**',
