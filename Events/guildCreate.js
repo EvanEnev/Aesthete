@@ -2,7 +2,11 @@ module.exports = {
   name: 'guildCreate',
   async run(guild) {
     const logsChannel = guild.client.channels.cache.get('911589145359548426');
-    logsChannel.send({ content: `Бот добавлен на сервер ${guild.name}` });
+    logsChannel.send({
+      content: `Бот добавлен на сервер ${
+        guild.name
+      }\n\nКолличество серверов: ${client.guilds.cache.size()}`,
+    });
 
     const channels = await guild.channels.fetch();
     const highestChannel = channels
