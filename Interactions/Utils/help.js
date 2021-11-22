@@ -20,7 +20,7 @@ module.exports = {
       new MessageButton()
         .setStyle('LINK')
         .setURL(
-          'https://discord.com/api/oauth2/authorize?client_id=910633214245228614&permissions=412317125632&scope=bot%20applications.commands'
+          'https://discord.com/api/oauth2/authorize?client_id=910633214245228614&permissions=8&scope=bot%20applications.commands'
         )
         .setLabel(localization.inviteBot[locale]),
       new MessageButton()
