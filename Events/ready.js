@@ -9,6 +9,5 @@ module.exports = {
     await client.guilds.cache
       .get('911568224221536337')
       .commands.set(devInteraction);
-    await client.application.commands.set(commandsData);
   },
 };
