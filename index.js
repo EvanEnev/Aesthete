@@ -73,4 +73,4 @@ function error(error) {
   errorsChannel.send({ embeds: [embed] });
 }
 
-client.login(process.env.devToken);
+client.login(process.env.token);
