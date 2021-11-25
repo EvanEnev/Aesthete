@@ -1,1 +1,1 @@
-module.exports = { colors: { default: '#00bbf9', error: 'f15bb5' } };
+module.exports = { colors: { default: '#5e81ac', error: 'bf616a' } };
