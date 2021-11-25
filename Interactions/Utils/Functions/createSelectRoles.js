@@ -34,7 +34,11 @@ module.exports = async (interaction, locale) => {
       rawEmoji.startsWith('<:') ||
       emojiRegex().test(rawEmoji))
   ) {
-    row.components[0].addOptions({ label: label, value: role.id, emoji });
+    row.components[0].addOptions({
+      label: label,
+      value: role.id,
+      emoji: rawEmoji,
+    });
   } else {
     row.components[0].addOptions({ label: label, value: role.id });
   }
