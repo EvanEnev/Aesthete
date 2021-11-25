@@ -5,7 +5,7 @@ module.exports = {
     logsChannel.send({
       content: `Бот удалён с сервера ${
         guild.name
-      }\n\nКолличество серверов: ${client.guilds.cache.size()}`,
+      }\n\nКолличество серверов: ${guild.client.guilds.cache.size()}`,
     });
   },
 };
