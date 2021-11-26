@@ -87,7 +87,7 @@ module.exports = {
       }
     }
 
-    if (!(language && channel)) {
+    if (!language && !channel) {
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
         { $unset: { rolePlayChannelID: '' } },
