@@ -14,7 +14,7 @@ module.exports = {
       .getString('message')
       .replaceAll('\\n', '\n');
 
-    interaction.client.guilds.forEach((guild) => {
+    interaction.client.guilds.cache.forEach((guild) => {
       const channel = guild.publicUpdatesChannel;
       channel.send({ content: message });
     });
