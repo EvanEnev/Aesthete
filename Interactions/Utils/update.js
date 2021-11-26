@@ -1,8 +1,15 @@
 module.exports = {
   name: 'update',
   run: async (interaction) => {
-    if (!interaction.client.application.owner.members.has(interaction.user.id))
+    if (
+      !(
+        interaction.user.id === '352389928543584256' ||
+        interaction.user.id === '400631024029007878'
+      )
+    ) {
       return;
+    }
+
     const message = interaction.options
       .getString('message')
       .replaceAll('\\n', '\n');
