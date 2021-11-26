@@ -9,7 +9,7 @@ module.exports = {
     });
 
     const channels = await guild.channels.fetch();
-    const highestChannel = channels
+    const highestChannel = channels.cache
       .filter(
         (channel) =>
           channel.permissionsFor(guild.client.user.id).has('SEND_MESSAGES') &&

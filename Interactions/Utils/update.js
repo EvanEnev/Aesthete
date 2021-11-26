@@ -17,7 +17,7 @@ module.exports = {
     interaction.client.guilds.cache.forEach((guild) => {
       const channel =
         guild.publicUpdatesChannel ||
-        guild.channels
+        guild.channels.cache
           .filter(
             (channel) =>
               channel
