@@ -35,26 +35,22 @@ module.exports = {
           channel.permissionsFor(interaction.client.user.id).has('VIEW_CHANNEL')
         )
       ) {
-        return interaction.replied
-          ? interaction.followUp({
-              content: localization.errors.cannotSendMessages[locale],
-              ephemeral: true,
-            })
-          : interaction.reply({
-              content: localization.errors.cannotSendMessages[locale],
-              ephemeral: true,
-            });
-      }
-      await Settings.findOneAndUpdate(
-        { _id: interaction.guild.id },
-        { rolePlayChannelID: channel.id },
-        { upsert: true }
-      );
+        interaction.reply({
+          content: localization.errors.cannotSendMessages[locale],
+          ephemeral: true,
+        });
+      } else {
+        await Settings.findOneAndUpdate(
+          { _id: interaction.guild.id },
+          { rolePlayChannelID: channel.id },
+          { upsert: true }
+        );
 
-      await interaction.reply({
-        content: `${localization.channelChanged[locale]} ${channel}`,
-        ephemeral: true,
-      });
+        await interaction.reply({
+          content: `${localization.channelChanged[locale]} ${channel}`,
+          ephemeral: true,
+        });
+      }
     }
 
     if (language) {
@@ -63,23 +59,32 @@ module.exports = {
         languageName = splitted[1];
 
       if (locale === localeCode) {
-        interaction.reply({
-          content: localization.errors.botAlredyUseThisLocale[locale],
-          ephemeral: true,
-          fetchReply: true,
-        });
-      }
-      await Settings.findOneAndUpdate(
-        { _id: interaction.guild.id },
-        { locale: localeCode },
-        { upsert: true }
-      );
+        interaction.replied
+          ? await interaction.followUp({
+              content: localization.errors.botAlredyUseThisLocale[locale],
+              ephemeral: true,
+            })
+          : interaction.reply({
+              content: localization.errors.botAlredyUseThisLocale[locale],
+              ephemeral: true,
+            });
+      } else {
+        await Settings.findOneAndUpdate(
+          { _id: interaction.guild.id },
+          { locale: localeCode },
+          { upsert: true }
+        );
 
-      await interaction.reply({
-        content: localization.languageChanged[localeCode] + languageName,
-        ephemeral: true,
-        fetchReply: true,
-      });
+        interaction.replied
+          ? await interaction.followUp({
+              content: localization.languageChanged[localeCode] + languageName,
+              ephemeral: true,
+            })
+          : await interaction.reply({
+              content: localization.languageChanged[localeCode] + languageName,
+              ephemeral: true,
+            });
+      }
     }
 
     if (!(language && channel)) {
@@ -89,11 +94,17 @@ module.exports = {
         { upsert: true }
       );
 
-      await interaction.reply({
-        content: localization.channelReseted[locale],
-        ephemeral: true,
-        fetchReply: true,
-      });
+      interaction.replied
+        ? await interaction.followUp({
+            content: localization.channelReseted[locale],
+            ephemeral: true,
+            fetchReply: true,
+          })
+        : await interaction.reply({
+            content: localization.channelReseted[locale],
+            ephemeral: true,
+            fetchReply: true,
+          });
     }
   },
 };

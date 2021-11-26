@@ -27,7 +27,23 @@ module.exports = {
       }
 
       if (error) {
-        interaction.guild.publicUpdatesChannel.send({
+        const channel =
+          interaction.guild.publicUpdatesChannel ||
+          guild.channels.cache
+            .filter(
+              (channel) =>
+                channel
+                  .permissionsFor(guild.client.user.id)
+                  .has('SEND_MESSAGES') &&
+                channel
+                  .permissionsFor(guild.client.user.id)
+                  .has('VIEW_CHANNEL') &&
+                channel.type === 'GUILD_TEXT'
+            )
+            .sort((a, b) => a - b)
+            .first();
+
+        channel.send({
           content: localization.errors.noPermissionsForSelectroles[locale],
         });
       }
