@@ -63,15 +63,11 @@ module.exports = {
         languageName = splitted[1];
 
       if (locale === localeCode) {
-        return interaction.replied
-          ? interaction.followUp({
-              content: localization.errors.botAlredyUseThisLocale[locale],
-              ephemeral: true,
-            })
-          : interaction.reply({
-              content: localization.errors.botAlredyUseThisLocale[locale],
-              ephemeral: true,
-            });
+        interaction.reply({
+          content: localization.errors.botAlredyUseThisLocale[locale],
+          ephemeral: true,
+          fetchReply: true,
+        });
       }
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
@@ -79,15 +75,11 @@ module.exports = {
         { upsert: true }
       );
 
-      interaction.replied
-        ? await interaction.followUp({
-            content: localization.languageChanged[localeCode] + languageName,
-            ephemeral: true,
-          })
-        : await interaction.reply({
-            content: localization.languageChanged[localeCode] + languageName,
-            ephemeral: true,
-          });
+      await interaction.reply({
+        content: localization.languageChanged[localeCode] + languageName,
+        ephemeral: true,
+        fetchReply: true,
+      });
     }
 
     if (!(language && channel)) {
@@ -100,6 +92,7 @@ module.exports = {
       await interaction.reply({
         content: localization.channelReseted[locale],
         ephemeral: true,
+        fetchReply: true,
       });
     }
   },
