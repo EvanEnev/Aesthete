@@ -1,8 +1,8 @@
+require('dotenv').config();
 const chalk = require('chalk');
 const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
 const mongoose = require('mongoose');
-const mongoose2 = require('mongoose');
 const tenor = require('tenorjs');
 const { colors } = require('./Utils/config');
 const intents = Intents.FLAGS;
@@ -73,4 +73,4 @@ function error(error) {
   errorsChannel.send({ embeds: [embed] });
 }
 
-client.login(process.env.token);
+client.login(process.env.devToken);

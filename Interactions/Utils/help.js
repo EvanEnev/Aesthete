@@ -25,7 +25,7 @@ module.exports = {
         .setLabel(localization.inviteBot[locale]),
       new MessageButton()
         .setStyle('LINK')
-        .setURL('https://youtu.be/dQw4w9WgXcQ')
+        .setURL('https://top.gg/bot/910633214245228614')
         .setLabel(localization.voteForBot[locale]),
       new MessageButton()
         .setStyle('LINK')
