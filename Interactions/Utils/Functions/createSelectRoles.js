@@ -48,8 +48,12 @@ module.exports = async (interaction, locale) => {
       .setDescription(embedDescription)
       .setColor(embedColor)
       .setThumbnail(embedThumbnail)
-      .setImage(embedImage)
-      .setFooter(embedFooter);
+      .setImage(embedImage);
+
+    if (embedFooter) {
+      embed.setFooter(embedFooter);
+    }
+
     if (embedTimestamp) {
       embed.setTimestamp();
     }
