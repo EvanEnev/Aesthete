@@ -26,7 +26,10 @@ module.exports = async (interaction, locale) => {
     embedTimestamp = interaction.options.getBoolean('embed-footer-timestamp');
 
   const row = new MessageActionRow().addComponents(
-    new MessageSelectMenu().setCustomId('addRoles').setMinValues(0)
+    new MessageSelectMenu()
+      .setCustomId('addRoles')
+      .setMinValues(0)
+      .setMaxValues(25)
   );
 
   if (
@@ -58,11 +61,15 @@ module.exports = async (interaction, locale) => {
       embed.setDescription(embedDescription);
     }
 
+    if (embedFooter) {
+      embed.setFooter(embedFooter);
+    }
+
     if (embedTimestamp) {
       embed.setTimestamp();
     }
   }
-  console.log(!(embed.description || messageContent));
+
   if (!(embed.description || embed.title || messageContent)) {
     return interaction.reply({
       content: localization.errors.noMessageOrEmbed[locale],

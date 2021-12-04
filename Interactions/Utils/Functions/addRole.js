@@ -2,7 +2,7 @@ const emojiRegex = require('emoji-regex');
 const localization = require('../../../Utils/localization');
 module.exports = async (interaction, locale, role, message) => {
   const label = interaction.options.getString('label'),
-    rawEmoji = interaction.options.getString('emoji')?.split(/ +/g)[0],
+    emoji = interaction.options.getString('emoji')?.split(/ +/g)[0],
     newRole = interaction.options.getRole('new-role');
 
   const components = message.components;
@@ -50,12 +50,12 @@ module.exports = async (interaction, locale, role, message) => {
   }
 
   if (
-    rawEmoji &&
-    (rawEmoji.startsWith('<a:') ||
-      rawEmoji.startsWith('<:') ||
-      emojiRegex().test(rawEmoji))
+    emoji &&
+    (emoji.startsWith('<a:') ||
+      emoji.startsWith('<:') ||
+      emojiRegex().test(emoji))
   ) {
-    row.components[0].addOptions({ label, value: newRole.id, rawEmoji });
+    row.components[0].addOptions({ label, value: newRole.id, emoji });
   } else {
     row.components[0].addOptions({ label, value: newRole.id });
   }
