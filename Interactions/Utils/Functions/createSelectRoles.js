@@ -17,6 +17,7 @@ module.exports = async (interaction, locale) => {
 
   const rawEmoji = getString('emoji')?.split(/ +/g)[0],
     messageContent = getString('message')?.replaceAll('\\n', '\n'),
+    embedTitle = getString('embed-title'),
     embedDescription = getString('embed-description')?.replaceAll('\\n', '\n'),
     embedColor = getString('embed-color'),
     embedThumbnail = getString('embed-thumbnail'),
@@ -43,15 +44,21 @@ module.exports = async (interaction, locale) => {
     row.components[0].addOptions({ label: label, value: role.id });
   }
 
-  if (embedDescription) {
+  if (embedDescription || embedTitle) {
     embed
-      .setDescription(embedDescription)
       .setColor(embedColor)
       .setThumbnail(embedThumbnail)
       .setImage(embedImage);
 
-    if (embedFooter) {
-      embed.setFooter(embedFooter);
+    if (embedTitle)
+      if (embedFooter) {
+        embed.setTitle(embedTitle);
+      }
+
+    if (embedDescription) {
+      if (embedFooter) {
+        embed.setDescription(embedDescription);
+      }
     }
 
     if (embedTimestamp) {

@@ -79,6 +79,11 @@ module.exports = [
               'Message that bot will send (can be skipped if will be used an embed)',
           },
           {
+            name: 'embed-title',
+            type: 'STRING',
+            description: 'The title of the embed',
+          },
+          {
             name: 'embed-description',
             type: 'STRING',
             description:
