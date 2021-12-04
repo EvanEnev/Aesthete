@@ -22,20 +22,23 @@ module.exports = async (interaction, locale) => {
 
   const messageContent =
       getString('message')?.replaceAll('\\n', '\n') || message.content,
-    embedDescription = getString('embed-description')?.replaceAll('\\n', '\n'),
-    embedColor = getString('embed-color'),
-    embedThumbnail = getString('embed-thumbnail'),
-    embedImage = getString('embed-image'),
-    embedFooter = getString('embed-footer'),
-    embedTimestamp = interaction.options.getBoolean('embed-footer-timestamp');
+    embedTitle = getString('embed-title');
+  (embedDescription = getString('embed-description')?.replaceAll('\\n', '\n')),
+    (embedColor = getString('embed-color')),
+    (embedThumbnail = getString('embed-thumbnail')),
+    (embedImage = getString('embed-image')),
+    (embedFooter = getString('embed-footer')),
+    (embedTimestamp = interaction.options.getBoolean('embed-footer-timestamp'));
 
-  if (embedDescription) {
+  if (embedDescription || embedTitle) {
     embed
       .setDescription(embedDescription)
+      .setTitle(embedTitle)
       .setColor(embedColor)
       .setThumbnail(embedThumbnail)
       .setImage(embedImage)
       .setFooter(embedFooter);
+
     if (embedTimestamp) {
       embed.setTimestamp();
     }
