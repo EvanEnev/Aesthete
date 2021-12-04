@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'guildRemove',
+  name: 'guildDelete',
   async run(guild) {
     const logsChannel = guild.client.channels.cache.get('911589145359548426');
     logsChannel.send({
