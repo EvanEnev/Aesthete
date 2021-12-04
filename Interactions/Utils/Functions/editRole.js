@@ -65,7 +65,7 @@ module.exports = async (interaction, locale, role, message) => {
   }
 
   options[index] = option;
-  row.components[0].setOptions(options);
+  row.components[0].setOptions(options).setMaxValues(options.length);
   components[components.indexOf(row)] = row;
 
   await message.edit({ components });

@@ -26,10 +26,7 @@ module.exports = async (interaction, locale) => {
     embedTimestamp = interaction.options.getBoolean('embed-footer-timestamp');
 
   const row = new MessageActionRow().addComponents(
-    new MessageSelectMenu()
-      .setCustomId('addRoles')
-      .setMinValues(0)
-      .setMaxValues(25)
+    new MessageSelectMenu().setCustomId('addRoles').setMinValues(0)
   );
 
   if (
