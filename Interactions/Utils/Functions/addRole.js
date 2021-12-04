@@ -60,6 +60,7 @@ module.exports = async (interaction, locale, role, message) => {
     row.components[0].addOptions({ label, value: newRole.id });
   }
 
+  row.components[0].setMaxValues(components.length + 1);
   components[components.indexOf(row)] = row;
   await message.edit({ components });
   interaction.reply({

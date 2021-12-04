@@ -29,7 +29,7 @@ module.exports = async (interaction, locale, role, message) => {
   );
 
   if (row.components[0].options.length - 1 > 0) {
-    row.components[0].setOptions(options);
+    row.components[0].setOptions(options).setMaxValues(options.length);
     components[components.indexOf(row)] = row;
   } else {
     components = [];
