@@ -1,14 +1,7 @@
-const Settings = require('../../../Schemas/Settings');
-
 const localization = require('../../../Utils/localization');
 module.exports = {
   name: 'addRoles',
-  run: async (interaction) => {
-    const settings = await Settings.findOne({
-      _id: interaction.guild.id,
-    });
-
-    const locale = settings?.locale || 'en';
+  run: async (interaction, locale) => {
     const roles = interaction.message.components[0].components[0].options.map(
         (option) => option.value
       ),
@@ -47,7 +40,7 @@ module.exports = {
           content: localization.errors.noPermissionsForSelectroles[locale],
         });
       }
-      await interaction.deferUpdate();
+      await interaction.deferUpdate().catch(() => {});
     });
   },
 };
