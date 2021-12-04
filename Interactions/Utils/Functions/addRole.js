@@ -55,7 +55,7 @@ module.exports = async (interaction, locale, role, message) => {
       rawEmoji.startsWith('<:') ||
       emojiRegex().test(rawEmoji))
   ) {
-    row.components[0].addOptions({ label, value: newRole.id, emoji });
+    row.components[0].addOptions({ label, value: newRole.id, rawEmoji });
   } else {
     row.components[0].addOptions({ label, value: newRole.id });
   }
