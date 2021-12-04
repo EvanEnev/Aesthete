@@ -50,23 +50,20 @@ module.exports = async (interaction, locale) => {
       .setThumbnail(embedThumbnail)
       .setImage(embedImage);
 
-    if (embedTitle)
-      if (embedFooter) {
-        embed.setTitle(embedTitle);
-      }
+    if (embedTitle) {
+      embed.setTitle(embedTitle);
+    }
 
     if (embedDescription) {
-      if (embedFooter) {
-        embed.setDescription(embedDescription);
-      }
+      embed.setDescription(embedDescription);
     }
 
     if (embedTimestamp) {
       embed.setTimestamp();
     }
   }
-
-  if (!(embed.description || messageContent)) {
+  console.log(!(embed.description || messageContent));
+  if (!(embed.description || embed.title || messageContent)) {
     return interaction.reply({
       content: localization.errors.noMessageOrEmbed[locale],
       ephemeral: true,
@@ -80,7 +77,7 @@ module.exports = async (interaction, locale) => {
     });
   }
 
-  if (embed.description) {
+  if (embed.description || embed.title) {
     channel.send({
       content: messageContent,
       embeds: [embed],

@@ -44,13 +44,13 @@ module.exports = async (interaction, locale) => {
     }
   }
 
-  if (!(embed.description || messageContent)) {
+  if (!(embed.description || embed.title || messageContent)) {
     return interaction.reply({
       content: localization.errors.noOptions[locale],
       ephemeral: true,
     });
   }
-  if (embed.description) {
+  if (embed.description || embed.title) {
     await message.edit({ content: messageContent, embeds: [embed] });
   } else {
     await message.edit({ content: messageContent });
