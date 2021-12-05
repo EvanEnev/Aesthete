@@ -2,7 +2,7 @@ const emojiRegex = require('emoji-regex');
 const localization = require('../../../Utils/localization');
 module.exports = async (interaction, locale, role, message) => {
   const label = interaction.options.getString('label'),
-    rawEmoji = interaction.options.getString('emoji')?.split(/ +/g)[0],
+    emoji = interaction.options.getString('emoji')?.split(/ +/g)[0],
     newRole = interaction.options.getRole('new-role');
 
   const components = message.components;
@@ -50,17 +50,17 @@ module.exports = async (interaction, locale, role, message) => {
     option.value = newRole.id;
   }
 
-  if (rawEmoji) {
-    if (rawEmoji.startsWith('<a:')) {
-      const withoutArrows = rawEmoji.slice(3, -1);
+  if (emoji) {
+    if (emoji.startsWith('<a:')) {
+      const withoutArrows = emoji.slice(3, -1);
       const splitted = withoutArrows.split(':');
       option.emoji = { id: splitted[1], name: splitted[0], animated: true };
-    } else if (rawEmoji.startsWith('<:')) {
-      const withoutArrows = rawEmoji.slice(2, -1);
+    } else if (emoji.startsWith('<:')) {
+      const withoutArrows = emoji.slice(2, -1);
       const splitted = withoutArrows.split(':');
       option.emoji = { id: splitted[1], name: splitted[0], animated: false };
-    } else if (emojiRegex().test(rawEmoji)) {
-      option.emoji = { id: null, name: rawEmoji };
+    } else if (emojiRegex().test(emoji)) {
+      option.emoji = { id: null, name: emoji };
     }
   }
 
