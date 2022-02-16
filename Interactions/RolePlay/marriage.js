@@ -32,7 +32,7 @@ module.exports = {
 
     if (secondMemberData?.marriage && action === 'marry') {
       return interaction.reply({
-        content: localization.memberAlreadyMarried[locale].replace(
+        content: localization.memberAlreadyMarried[locale.ephemeral].replace(
           '{member}',
           `${member}`
         ),
