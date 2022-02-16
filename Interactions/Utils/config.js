@@ -3,12 +3,18 @@ const localization = require('../../Utils/localization');
 
 module.exports = {
   name: 'config',
-  run: async (interaction) => {
-    const settings = await Settings.findOne({
-      _id: interaction.guild.id,
-    });
-
-    const locale = settings?.locale || 'en';
+  run: async (interaction, locale) => {
+    const reply = async (content) => {
+      interaction.replied
+        ? await interaction.followUp({
+            content,
+            ephemeral: true,
+          })
+        : await interaction.reply({
+            content,
+            ephemeral: true,
+          });
+    };
 
     if (
       !(
@@ -23,27 +29,33 @@ module.exports = {
         ephemeral: true,
       });
 
-    const channel = interaction.options.getChannel('channel'),
-      language = interaction.options.getString('language');
+    const getOption = (property) => {
+      return interaction.options.get(property);
+    };
+    const rolePlaychannel = interaction.options.getChannel('role-play-channel'),
+      language = interaction.options.getString('language'),
+      toReset = interaction.options.getString('reset');
 
-    if (channel) {
+    if (getOption('role-play-channel')) {
       if (
         !(
-          channel
+          rolePlaychannel
             .permissionsFor(interaction.client.user.id)
             .has('SEND_MESSAGES') &&
-          channel.permissionsFor(interaction.client.user.id).has('VIEW_CHANNEL')
+          rolePlaychannel
+            .permissionsFor(interaction.client.user.id)
+            .has('VIEW_CHANNEL')
         )
       ) {
-        return interaction.replied
-          ? interaction.followUp({
-              content: localization.errors.cannotSendMessages[locale],
-              ephemeral: true,
-            })
-          : interaction.reply({
-              content: localization.errors.cannotSendMessages[locale],
-              ephemeral: true,
-            });
+        reply(localization.errors.cannotSendMessages[locale]);
+      } else {
+        await Settings.findOneAndUpdate(
+          { _id: interaction.guild.id },
+          { rolePlayChannelID: rolePlaychannel.id },
+          { upsert: true }
+        );
+
+        reply(`${localization.channelChanged[locale]} ${rolePlaychannel}`);
       }
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
@@ -63,44 +75,29 @@ module.exports = {
         languageName = splitted[1];
 
       if (locale === localeCode) {
-        return interaction.replied
-          ? interaction.followUp({
-              content: localization.errors.botAlredyUseThisLocale[locale],
-              ephemeral: true,
-            })
-          : interaction.reply({
-              content: localization.errors.botAlredyUseThisLocale[locale],
-              ephemeral: true,
-            });
-      }
-      await Settings.findOneAndUpdate(
-        { _id: interaction.guild.id },
-        { locale: localeCode },
-        { upsert: true }
-      );
+        reply(localization.errors.botAlredyUseThisLocale[locale]);
+      } else {
+        await Settings.findOneAndUpdate(
+          { _id: interaction.guild.id },
+          { locale: localeCode },
+          { upsert: true }
+        );
 
-      interaction.replied
-        ? await interaction.followUp({
-            content: localization.languageChanged[localeCode] + languageName,
-            ephemeral: true,
-          })
-        : await interaction.reply({
-            content: localization.languageChanged[localeCode] + languageName,
-            ephemeral: true,
-          });
+        reply(localization.languageChanged[localeCode] + languageName);
+      }
+    }
+    if (getOption('dm-member')) {
     }
 
-    if (!(language && channel)) {
+    if (toReset) {
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
-        { $unset: { rolePlayChannelID: '' } },
-        { upsert: true }
+        { $unset: { toReset: '' } }
       );
 
-      await interaction.reply({
-        content: localization.channelReseted[locale],
-        ephemeral: true,
-      });
+      reply(
+        localization.settingReseted[locale].replace('{setting}', `${toReset}`)
+      );
     }
   },
 };

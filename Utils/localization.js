@@ -25,8 +25,125 @@ module.exports = {
     en: '**Channel for role-play actions reseted**',
   },
   languageChanged: {
-    ru: '**Теперь я буду этот язык: **',
+    ru: '**Теперь я буду использовать этот язык: **',
     en: '**Since now I will use this language: **',
+  },
+  settingReseted: {
+    ru: '**Настройка `{setting}` сброшена**',
+    en: '**The `{setting}` setted is reset**',
+  },
+  infoChanged: {
+    ru: '**Информация изменена**',
+    en: '**Info changed**',
+  },
+  infoCommand: {
+    ru: '*Для добавления используйте `/about-me`*',
+    en: 'Use `/about-me` to set*',
+  },
+  selectRoles: {
+    selectRolesCreated: {
+      ru: '**Выбор роли создан**',
+      en: '**Select-roles created**',
+    },
+    selectRolesRemoved: {
+      ru: '**Выбор роли удалён**',
+      en: '**Select-roles removed**',
+    },
+    selectRolesMessageEdited: {
+      ru: '**Сообщение выбора роли изменёно**',
+      en: '**Select-roles message edited**',
+    },
+    roleAdded: {
+      ru: '**Роль добавлена**',
+      en: '**Role added**',
+    },
+    roleRemoved: {
+      ru: '**Роль удалена**',
+      en: '**Role removed**',
+    },
+    roleChanged: { ru: '**Роль изменена**', en: '**Role edited**' },
+  },
+  marriages: {
+    youAlredyMarried: {
+      ru: '**Вы уже в браке с {member}**',
+      en: '**You already married to {member}**',
+    },
+    memberAlreadyMarried: {
+      ru: '**Этот пользователь уже в браке с {member}**',
+      en: '**This member already married to {member}**',
+    },
+    youAreNotMarried: {
+      ru: '**Вы не в браке**',
+      en: '**You are not married**',
+    },
+    memberIsNotMarriedWithYou: {
+      ru: '**Этот пользователеь не в браке с Вами**',
+      en: '**This member is not married to you**',
+    },
+    youCannotDoItWithYourself: {
+      ru: '**Нельзя {action} с собой**',
+      en: '**You cannot {action} yourself**',
+    },
+    memberWantToMarry: {
+      ru: '**{member}, участник {user} хочет вступить с Вами в брак**',
+      en: '**{member}, {user} want to marry you**',
+    },
+    memberWantToDivorce: {
+      ru: '**{member}, участник {user} хочет развестись с Вами**',
+      en: '**{member}, {user} want to divorce you**',
+    },
+    marriageMessageSent: {
+      ru: '**Предложение о браке отправлено**',
+      en: '**Marriage proposal sent**',
+    },
+    divorceMessageSent: {
+      ru: '**Предложение о разводе отправлено**',
+      en: '**Divorce proposal sent**',
+    },
+    marryAcceptChannel: {
+      ru: '**{firstUser} и {secondUser} теперь в браке !**',
+      en: '**{firstUser} and {secondUser} are now married !**',
+    },
+    divorceAcceptChannel: {
+      ru: '**{firstUser} и {secondUser} теперь не в браке**',
+      en: '**{firstUser} and {secondUser} are no longer married**',
+    },
+    marryAcceptMember: {
+      ru: '**Вы приняли предложение о браке**',
+      en: '**You have accepted the marriage proposal**',
+    },
+    divorceAcceptMember: {
+      ru: '**Вы приняли предложение о разводе**',
+      en: '**You have accepted the divorce proposal**',
+    },
+    marryDecline: {
+      ru: '**Вы отклонили предложение о браке**',
+      en: '**You have rejected the marriage proposal**',
+    },
+    divorceDecline: {
+      ru: '**Вы отклонили предложение о разводе**',
+      en: '**You have rejected the divorce proposal**',
+    },
+  },
+
+  embeds: {
+    passport: {
+      title: { ru: '**Пасспорт {member}**', en: "**{member}'s passport**" },
+      fields: {
+        ru: [
+          { name: 'Создан:', value: '<t:{created}>', inline: true },
+          { name: 'Присоединился:', value: '<t:{joined}>', inline: true },
+          { name: '\u200B', value: '\u200B' },
+          { name: 'О себе:', value: '{about}' },
+        ],
+        en: [
+          { name: 'Create:', value: '<t:{created}>', inline: true },
+          { name: 'Joined:', value: '<t:{joined}>', inline: true },
+          { name: '\u200B', value: '\u200B' },
+          { name: 'About me:', value: '{about}' },
+        ],
+      },
+    },
   },
   errors: {
     memberRequired: {
@@ -49,6 +166,11 @@ module.exports = {
       ru: '**Я уже использую этот язык**',
       en: '**I already use this language**',
     },
+  },
+
+  buttons: {
+    accept: { ru: 'Принять', en: 'Accept' },
+    reject: { ru: 'Отклонить', en: 'Reject' },
   },
   permissions: {
     administrator: {

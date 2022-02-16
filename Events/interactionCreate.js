@@ -1,37 +1,78 @@
 const commandsData = require('../Utils/interactions');
-
+const Settings = require('../Schemas/Settings');
 module.exports = {
   name: 'interactionCreate',
   async run(interaction, client) {
-    if (!interaction.guild) return;
+    if (!interaction.guild?.available) return;
+
+    const settings = await Settings.findOne({
+      _id: interaction.guild.id,
+    });
+
+    const localeHandler = (localeName) => {
+      const setLocale = () => {
+        let localeValue;
+        const locale = (
+          interaction[localeName]?.includes('-')
+            ? interaction[localeName]?.slice(0, -3)
+            : interaction[localeName]
+        ).toLowerCase();
+
+        if (localeName === 'locale') {
+          localeValue = ['ru', 'en'].includes(locale)
+            ? locale
+            : settings?.locale;
+        } else {
+          localeValue = settings?.locale || locale;
+        }
+        return localeValue;
+      };
+
+      return ['ru', 'en'].includes(setLocale()) ? setLocale() : 'en';
+    };
+
+    const locale = {
+      normal: localeHandler('guildLocale'),
+      ephemeral: localeHandler('locale'),
+    };
+
+    let property;
+
     if (interaction.isButton()) {
-      const button = client.buttons.get(interaction.customId);
-      if (!button) return;
-      button.run(interaction, client);
+      property = 'buttons';
     } else if (interaction.isSelectMenu()) {
-      const select = client.selects.get(interaction.customId);
-      if (!select) return;
-      select.run(interaction, client);
+      property = 'selects';
     } else if (interaction.isCommand()) {
+      property = 'interactions';
+    } else if (interaction.isContextMenu()) {
+      property = 'contexts';
+    } else if (interaction.isAutocomplete()) {
+      property = 'autocompletes';
+    }
+
+    const action = client[property]?.get(
+      interaction.commandName || interaction.customId
+    );
+    if (!action) return;
+
+    if (property === 'interactions') {
+      if (client.user.id !== '912631976282976287') {
+        client.statcord.postCommand(
+          interaction.commandName,
+          interaction.user.id
+        );
+      }
+
       const commandData = commandsData.find(
         (data) => data.name === interaction.commandName
       );
+
       if (commandData?.category === 'roleplay') {
         const file = require('../Interactions/RolePlay/index');
-        file.run(interaction);
-      } else {
-        const command = client.interactions.get(interaction.commandName);
-        if (!command) return;
-        /* client.statcord.postCommand(
-          interaction.commandName,
-          interaction.user.id
-        ); */
-        if (command) command.run(interaction, client);
+        return file.run(interaction);
       }
-    } else if (interaction.isContextMenu()) {
-      const context = client.contexts.get(interaction.commandName);
-      if (!context) return;
-      context.run(interaction, client);
     }
+
+    action.run(interaction, locale);
   },
 };

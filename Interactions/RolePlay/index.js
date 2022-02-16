@@ -3,7 +3,7 @@ const commandsData = require('../../Utils/interactions');
 const localization = require('../../Utils/localization');
 
 module.exports = {
-  run: async (interaction) => {
+  run: async (interaction, locale) => {
     const member = interaction.options.getMember('member'),
       words = interaction.options.getString('words');
 
@@ -15,25 +15,23 @@ module.exports = {
       _id: interaction.guild.id,
     });
 
-    const locale = settings?.locale || 'en';
-
     if (!member && commandData.member) {
       return interaction.reply({
-        content: localization.errors.memberRequired[locale],
+        content: localization.errors.memberRequired[locale.ephemeral],
         ephemeral: true,
       });
     }
 
     if (member?.id === interaction.user.id) {
       return interaction.reply({
-        content: localization.errors.rolePlayeWithYourself[locale],
+        content: localization.errors.rolePlayeWithYourself[locale.ephemeral],
         ephemeral: true,
       });
     }
 
     if (member?.user.bot) {
       return interaction.reply({
-        content: localization.errors.rolePlayeWithBot[locale],
+        content: localization.errors.rolePlayeWithBot[locale.ephemeral],
         ephemeral: true,
       });
     }
@@ -42,13 +40,15 @@ module.exports = {
       `anime ${interaction.commandName}`,
       '50'
     );
+
     const gif = gifs[Math.floor(Math.random() * gifs.length)].media[0].gif.url;
 
     let channel = interaction.channel;
 
     if (settings?.rolePlayChannelID) {
-      const channelId = settings.rolePlayChannelID;
-      channel = interaction.guild.channels.cache.get(channelId);
+      channel = interaction.guild.channels.cache.get(
+        settings.rolePlayChannelID
+      );
     }
 
     if (
@@ -60,12 +60,12 @@ module.exports = {
       )
     ) {
       return interaction.reply({
-        content: localization.errors.cannotSendMessages[locale],
+        content: localization.errors.cannotSendMessages[locale.ephemeral],
         ephemeral: true,
       });
     }
 
-    const splittedLocales = commandData.locales[locale].split(' ');
+    const splittedLocales = commandData.locales[locale.normal].split(' ');
 
     let content = `${interaction.member} ${splittedLocales[0]}`;
     if (member) {
@@ -83,7 +83,7 @@ module.exports = {
       files: [gif],
     });
     interaction.reply({
-      content: `**${localization.rolePlayComplete[locale]}**`,
+      content: `**${localization.rolePlayComplete[locale.ephemeral]}**`,
       ephemeral: true,
     });
   },
