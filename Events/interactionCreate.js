@@ -3,41 +3,7 @@ const Settings = require('../Schemas/Settings');
 module.exports = {
   name: 'interactionCreate',
   async run(interaction, client) {
-    if (!interaction.guild?.available) return;
-
-    const settings = await Settings.findOne({
-      _id: interaction.guild.id,
-    });
-
-    const localeHandler = (localeName) => {
-      const setLocale = () => {
-        let localeValue;
-        const locale = (
-          interaction[localeName]?.includes('-')
-            ? interaction[localeName]?.slice(0, -3)
-            : interaction[localeName]
-        ).toLowerCase();
-
-        if (localeName === 'locale') {
-          localeValue = ['ru', 'en'].includes(locale)
-            ? locale
-            : settings?.locale;
-        } else {
-          localeValue = settings?.locale || locale;
-        }
-        return localeValue;
-      };
-
-      return ['ru', 'en'].includes(setLocale()) ? setLocale() : 'en';
-    };
-
-    const locale = {
-      normal: localeHandler('guildLocale'),
-      ephemeral: localeHandler('locale'),
-    };
-
-    let property;
-
+    if (!(interaction.guild || interaction.guild.available)) return;
     if (interaction.isButton()) {
       property = 'buttons';
     } else if (interaction.isSelectMenu()) {

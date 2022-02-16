@@ -32,5 +32,5 @@ module.exports = {
           .first();
       channel.send({ content: message });
     });
-  }
+  },
 };

@@ -32,17 +32,14 @@ module.exports = {
     const getOption = (property) => {
       return interaction.options.get(property);
     };
-    const rolePlaychannel = interaction.options.getChannel('role-play-channel'),
-      language = interaction.options.getString('language'),
-      toReset = interaction.options.getString('reset');
 
     if (getOption('role-play-channel')) {
       if (
         !(
-          rolePlaychannel
+          getOption('role-play-channel')
             .permissionsFor(interaction.client.user.id)
             .has('SEND_MESSAGES') &&
-          rolePlaychannel
+          getOption('role-play-channel')
             .permissionsFor(interaction.client.user.id)
             .has('VIEW_CHANNEL')
         )
@@ -51,11 +48,15 @@ module.exports = {
       } else {
         await Settings.findOneAndUpdate(
           { _id: interaction.guild.id },
-          { rolePlayChannelID: rolePlaychannel.id },
+          { rolePlayChannelID: getOption('role-play-channel').id },
           { upsert: true }
         );
 
-        reply(`${localization.channelChanged[locale]} ${rolePlaychannel}`);
+        reply(
+          `${localization.channelChanged[locale]} ${getOption(
+            'role-play-channel'
+          )}`
+        );
       }
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
@@ -87,16 +88,18 @@ module.exports = {
       }
     }
     if (getOption('dm-member')) {
+      //TODO
     }
 
-    if (toReset) {
+    if (getOption('toReset')) {
+      const name = getOption('toReset');
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
-        { $unset: { toReset: '' } }
+        { $unset: { name: '' } }
       );
 
       reply(
-        localization.settingReseted[locale].replace('{setting}', `${toReset}`)
+        localization.settingReseted[locale].replace('{setting}', `${name}`)
       );
     }
   },

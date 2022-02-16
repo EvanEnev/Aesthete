@@ -166,6 +166,50 @@ module.exports = {
       ru: '**Я уже использую этот язык**',
       en: '**I already use this language**',
     },
+    noMessageOrEmbed: {
+      ru: '**Необходимо указать сообщение или эмбед**',
+      en: '**You must specify a message or an embed**',
+    },
+    unSupportedRole: {
+      ru: '**Роль не должны быть ролью бота или @everyone**',
+      en: '**The role must not be a bot or @everyone role**',
+    },
+    noPermissionsForSelectroles: {
+      ru: '**Я не могу добавить/убрать роль при выборе\nПроверьте, чтобы моя роль стояла выше**',
+      en: '**I cannot assgin/remove role on select\nPut my role higher**',
+    },
+    noMessage: {
+      ru: '**Я не могу найти это сообщение**',
+      en: '**I cannot find this message**',
+    },
+    messageWithNoSelectRoles: {
+      ru: '**У сообщения нет меню выбора роли**',
+      en: '**This message does not contains select-roles menu**',
+    },
+    noLabel: {
+      ru: '**Вы должны указать имя выбора**',
+      en: '**You must specify the label**',
+    },
+    noNewRole: {
+      ru: '**Вы должны указать новую роль**',
+      en: '**You must specify the new role**',
+    },
+    roleAlreadyAdded: {
+      ru: '**Эта роль уже добавлена**',
+      en: '**This role already added**',
+    },
+    noRoleInMenu: {
+      ru: '**Эта роль не добавлена**',
+      en: '**This role has not been added**',
+    },
+    noOptions: {
+      ru: '**Вы должны указать опцию для изменения**',
+      en: '**You must specify the option to edit**',
+    },
+    tooManyRoles: {
+      ru: '**В сообщение добавлено максимальное количество ролей (25)**',
+      en: '**This message has a maximum number of roles (25)**',
+    },
   },
 
   buttons: {
