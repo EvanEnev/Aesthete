@@ -2,9 +2,14 @@ const localization = require('../../../Utils/localization');
 const Members = require('../../../Schemas/Members');
 const { Util } = require('discord.js');
 const Settings = require('../../../Schemas/Settings');
+const checkInteractionUser = require('../../Functions/checkInteractionUser');
+
 module.exports = {
   name: 'divorceAccept',
   run: async (interaction, locale) => {
+    if (!checkInteractionUser(interaction, 1, locale)) {
+      return;
+    }
     const usersIDs = Util.discordSort(interaction.message.mentions.users);
     const member = await interaction.guild.members.fetch(usersIDs.last());
 

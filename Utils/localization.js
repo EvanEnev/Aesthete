@@ -146,6 +146,10 @@ module.exports = {
     },
   },
   errors: {
+    youCannotInteract: {
+      ru: '**Вы не можете взаимодействовать с этим**',
+      en: '**You cannot interact with this**',
+    },
     memberRequired: {
       ru: '**Действие требует указания участника**',
       en: '**This action required a member**',
