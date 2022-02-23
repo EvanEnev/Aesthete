@@ -22,7 +22,7 @@ module.exports = {
       if (error) {
         const channel =
           interaction.guild.publicUpdatesChannel ||
-          guild.channels.cache
+          interaction.guild.channels.cache
             .filter(
               (channel) =>
                 channel
