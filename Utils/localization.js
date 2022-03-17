@@ -36,9 +36,17 @@ module.exports = {
     ru: '**Информация изменена**',
     en: '**Info changed**',
   },
+  dmChanged: {
+    ru: '**Теперь я буду отправлять заявки в личные сообщения**',
+    en: '**Since now I will send requests in DMs**',
+  },
   infoCommand: {
-    ru: '*Для добавления используйте `/about-me`*',
-    en: 'Use `/about-me` to set*',
+    ru: '**Для добавления используйте `/about-me`**',
+    en: '**Use `/about-me` to set**',
+  },
+  notMarriaged: {
+    ru: '**Не в браке**',
+    en: '**Not marriaged**',
   },
   selectRoles: {
     selectRolesCreated: {
@@ -134,13 +142,15 @@ module.exports = {
           { name: 'Создан:', value: '<t:{created}>', inline: true },
           { name: 'Присоединился:', value: '<t:{joined}>', inline: true },
           { name: '\u200B', value: '\u200B' },
-          { name: 'О себе:', value: '{about}' },
+          { name: 'О себе:', value: '{about}', inline: true },
+          { name: 'Брак:', value: '{marriage}', inline: true },
         ],
         en: [
           { name: 'Create:', value: '<t:{created}>', inline: true },
           { name: 'Joined:', value: '<t:{joined}>', inline: true },
           { name: '\u200B', value: '\u200B' },
-          { name: 'About me:', value: '{about}' },
+          { name: 'About me:', value: '{about}', inline: true },
+          { name: 'Marriage:', value: '{marriage}', inline: true },
         ],
       },
     },
@@ -213,6 +223,10 @@ module.exports = {
     tooManyRoles: {
       ru: '**В сообщение добавлено максимальное количество ролей (25)**',
       en: '**This message has a maximum number of roles (25)**',
+    },
+    botAlredyUseDMs: {
+      ru: '**Я уже отправляет заявки в личные сообщения**',
+      en: '**I already send requests in DMs**',
     },
   },
 

@@ -71,7 +71,7 @@ module.exports = {
     const settings = await Settings.findOne({ _id: interaction.guild.id });
 
     let channel = await interaction.guild.channels.fetch(
-      settings?.weddingsChannel
+      settings?.weddingsChannelID
     );
 
     if (typeof channel === 'object') {

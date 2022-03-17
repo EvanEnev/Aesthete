@@ -9,13 +9,15 @@ module.exports = {
     const member =
       interaction.options.getMember('member') || interaction.member;
 
-    const info =
-      (
-        await Members.findOne({
-          id: member.id,
-          guildID: interaction.guild.id,
-        })
-      ).about || localization.infoCommand[locale.ephemeral];
+    const MemberData = await Members.findOne({
+      id: member.id,
+      guildID: interaction.guild.id,
+    });
+
+    const info = MemberData.about || localization.infoCommand[locale.ephemeral];
+    const marriage =
+      (await interaction.guild.members.fetch(MemberData.marriage)) ||
+      localization.notMarriaged[locale.ephemeral];
 
     await member.user.fetch();
     const color =
@@ -31,7 +33,8 @@ module.exports = {
           Math.floor(member.user.createdTimestamp / 1000)
         )
         .replaceAll('{joined}', Math.floor(member.joinedTimestamp / 1000))
-        .replaceAll('{about}', info);
+        .replaceAll('{about}', info)
+        .replaceAll('{marriage}', marriage);
     });
 
     const embed = new MessageEmbed()

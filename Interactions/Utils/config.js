@@ -24,14 +24,36 @@ module.exports = {
     )
       return interaction.reply({
         content:
-          localization.missingPermissions[locale] +
-          localization.permissions.manageGuild[locale],
+          localization.missingPermissions[locale.ephemeral] +
+          localization.permissions.manageGuild[locale.ephemeral],
         ephemeral: true,
       });
+
+    const settings = await Settings.findOne({ _id: interaction.guild.id });
 
     const getOption = (property) => {
       return interaction.options.get(property);
     };
+
+    let NewLocale = '';
+    if (getOption('languge')) {
+      const splitted = getOption('languge').split(' ');
+      const LocaleCode = splitted[0],
+        LanguageName = splitted[1];
+
+      if (locale === LocaleCode) {
+        reply(localization.errors.botAlredyUseThisLocale[locale.ephemeral]);
+      } else {
+        NewLocale = LocaleCode;
+        await Settings.findOneAndUpdate(
+          { _id: interaction.guild.id },
+          { locale: LocaleCode },
+          { upsert: true }
+        );
+
+        reply(localization.languageChanged[LocaleCode] + LanguageName);
+      }
+    }
 
     if (getOption('role-play-channel')) {
       if (
@@ -44,7 +66,9 @@ module.exports = {
             .has('VIEW_CHANNEL')
         )
       ) {
-        reply(localization.errors.cannotSendMessages[locale]);
+        reply(
+          localization.errors.cannotSendMessages[NewLocale || locale.ephemeral]
+        );
       } else {
         await Settings.findOneAndUpdate(
           { _id: interaction.guild.id },
@@ -53,9 +77,9 @@ module.exports = {
         );
 
         reply(
-          `${localization.channelChanged[locale]} ${getOption(
-            'role-play-channel'
-          )}`
+          `${
+            localization.channelChanged[NewLocale || locale.ephemeral]
+          } ${getOption('role-play-channel')}`
         );
       }
       await Settings.findOneAndUpdate(
@@ -65,41 +89,39 @@ module.exports = {
       );
 
       await interaction.reply({
-        content: `${localization.channelChanged[locale]} ${channel}`,
+        content: `${
+          localization.channelChanged[NewLocale || locale.ephemeral]
+        } ${channel}`,
         ephemeral: true,
       });
     }
 
-    if (language) {
-      const splitted = language.split(' ');
-      const localeCode = splitted[0],
-        languageName = splitted[1];
-
-      if (locale === localeCode) {
-        reply(localization.errors.botAlredyUseThisLocale[locale]);
+    if (getOption('dm-members')) {
+      if (settings?.dmMember) {
+        reply(localization.errors.botAlredyUseDMs[locale.ephemeral]);
       } else {
         await Settings.findOneAndUpdate(
           { _id: interaction.guild.id },
-          { locale: localeCode },
+          { dmMembers: getOption('dm-members') },
           { upsert: true }
         );
 
-        reply(localization.languageChanged[localeCode] + languageName);
+        reply(localization.dmChanged[NewLocale || locale.ephemeral]);
       }
     }
-    if (getOption('dm-member')) {
-      //TODO
-    }
 
-    if (getOption('toReset')) {
-      const name = getOption('toReset');
+    if (getOption('reset')) {
+      const name = getOption('reset');
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
         { $unset: { name: '' } }
       );
 
       reply(
-        localization.settingReseted[locale].replace('{setting}', `${name}`)
+        localization.settingReseted[NewLocale || locale.ephemeral].replace(
+          '{setting}',
+          `${name}`
+        )
       );
     }
   },
