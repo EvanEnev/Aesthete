@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const tenor = require('tenorjs');
 const { colors } = require('./Utils/config');
 const intents = Intents.FLAGS;
+const Statcord = require('statcord.js');
 
 const client = new Client({
   presence: {
@@ -13,6 +14,11 @@ const client = new Client({
     activities: [{ name: '/help', type: 'PLAYING' }],
   },
   intents: [intents.GUILDS, intents.GUILD_MEMBERS],
+});
+
+client.statcord = new Statcord.Client({
+  client,
+  key: process.env.statcordToken,
 });
 
 client.tenor = tenor.client({
@@ -26,6 +32,7 @@ client.tenor = tenor.client({
 client.interactions = new Collection();
 client.buttons = new Collection();
 client.selects = new Collection();
+client.autocompletes = new Collection();
 
 const handlers = readdirSync('./Handlers').filter((file) =>
   file.endsWith('.js')
@@ -35,10 +42,14 @@ for (const file of handlers) {
   require(`./Handlers/${file}`)(client);
 }
 
-mongoose.connect(process.env.mongodbUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(process.env.mongodbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log(chalk.blue('MongoDB connected'));
+  });
 
 process.on('unhandledRejection', (err) => {
   error(err);

@@ -1,17 +1,10 @@
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
-const Settings = require('../../Schemas/Settings');
 const { colors } = require('../../Utils/config');
 const localization = require('../../Utils/localization');
 
 module.exports = {
   name: 'help',
-  run: async (interaction) => {
-    const settings = await Settings.findOne({
-      _id: interaction.guild.id,
-    });
-
-    const locale = settings?.locale || 'en';
-
+  run: async (interaction, locale) => {
     const embed = new MessageEmbed()
       .setColor(colors.default)
       .setDescription(localization.description[locale]);
@@ -34,5 +27,5 @@ module.exports = {
     );
 
     interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
-  },
+  }
 };

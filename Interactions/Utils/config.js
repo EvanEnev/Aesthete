@@ -3,12 +3,18 @@ const localization = require('../../Utils/localization');
 
 module.exports = {
   name: 'config',
-  run: async (interaction) => {
-    const settings = await Settings.findOne({
-      _id: interaction.guild.id,
-    });
-
-    const locale = settings?.locale || 'en';
+  run: async (interaction, locale) => {
+    const reply = async (content) => {
+      interaction.replied
+        ? await interaction.followUp({
+            content,
+            ephemeral: true,
+          })
+        : await interaction.reply({
+            content,
+            ephemeral: true,
+          });
+    };
 
     if (
       !(
@@ -18,93 +24,105 @@ module.exports = {
     )
       return interaction.reply({
         content:
-          localization.missingPermissions[locale] +
-          localization.permissions.manageGuild[locale],
+          localization.missingPermissions[locale.ephemeral] +
+          localization.permissions.manageGuild[locale.ephemeral],
         ephemeral: true,
       });
 
-    const channel = interaction.options.getChannel('channel'),
-      language = interaction.options.getString('language');
+    const settings = await Settings.findOne({ _id: interaction.guild.id });
 
-    if (channel) {
+    const getOption = (property) => {
+      return interaction.options.get(property);
+    };
+
+    let NewLocale = '';
+    if (getOption('languge')) {
+      const splitted = getOption('languge').split(' ');
+      const LocaleCode = splitted[0],
+        LanguageName = splitted[1];
+
+      if (locale === LocaleCode) {
+        reply(localization.errors.botAlredyUseThisLocale[locale.ephemeral]);
+      } else {
+        NewLocale = LocaleCode;
+        await Settings.findOneAndUpdate(
+          { _id: interaction.guild.id },
+          { locale: LocaleCode },
+          { upsert: true }
+        );
+
+        reply(localization.languageChanged[LocaleCode] + LanguageName);
+      }
+    }
+
+    if (getOption('role-play-channel')) {
       if (
         !(
-          channel
+          getOption('role-play-channel')
             .permissionsFor(interaction.client.user.id)
             .has('SEND_MESSAGES') &&
-          channel.permissionsFor(interaction.client.user.id).has('VIEW_CHANNEL')
+          getOption('role-play-channel')
+            .permissionsFor(interaction.client.user.id)
+            .has('VIEW_CHANNEL')
         )
       ) {
-        interaction.reply({
-          content: localization.errors.cannotSendMessages[locale],
-          ephemeral: true,
-        });
+        reply(
+          localization.errors.cannotSendMessages[NewLocale || locale.ephemeral]
+        );
       } else {
         await Settings.findOneAndUpdate(
           { _id: interaction.guild.id },
-          { rolePlayChannelID: channel.id },
+          { rolePlayChannelID: getOption('role-play-channel').id },
           { upsert: true }
         );
 
-        await interaction.reply({
-          content: `${localization.channelChanged[locale]} ${channel}`,
-          ephemeral: true,
-        });
-      }
-    }
-
-    if (language) {
-      const splitted = language.split(' ');
-      const localeCode = splitted[0],
-        languageName = splitted[1];
-
-      if (locale === localeCode) {
-        interaction.replied
-          ? await interaction.followUp({
-              content: localization.errors.botAlredyUseThisLocale[locale],
-              ephemeral: true,
-            })
-          : interaction.reply({
-              content: localization.errors.botAlredyUseThisLocale[locale],
-              ephemeral: true,
-            });
-      } else {
-        await Settings.findOneAndUpdate(
-          { _id: interaction.guild.id },
-          { locale: localeCode },
-          { upsert: true }
+        reply(
+          `${
+            localization.channelChanged[NewLocale || locale.ephemeral]
+          } ${getOption('role-play-channel')}`
         );
-
-        interaction.replied
-          ? await interaction.followUp({
-              content: localization.languageChanged[localeCode] + languageName,
-              ephemeral: true,
-            })
-          : await interaction.reply({
-              content: localization.languageChanged[localeCode] + languageName,
-              ephemeral: true,
-            });
       }
-    }
-
-    if (!language && !channel) {
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
-        { $unset: { rolePlayChannelID: '' } },
+        { rolePlayChannelID: channel.id },
         { upsert: true }
       );
 
-      interaction.replied
-        ? await interaction.followUp({
-            content: localization.channelReseted[locale],
-            ephemeral: true,
-            fetchReply: true,
-          })
-        : await interaction.reply({
-            content: localization.channelReseted[locale],
-            ephemeral: true,
-            fetchReply: true,
-          });
+      await interaction.reply({
+        content: `${
+          localization.channelChanged[NewLocale || locale.ephemeral]
+        } ${channel}`,
+        ephemeral: true,
+      });
+    }
+
+    if (getOption('dm-members')) {
+      if (settings?.dmMember) {
+        reply(localization.errors.botAlredyUseDMs[locale.ephemeral]);
+      } else {
+        await Settings.findOneAndUpdate(
+          { _id: interaction.guild.id },
+          { dmMembers: getOption('dm-members') },
+          { upsert: true }
+        );
+
+        reply(localization.dmChanged[NewLocale || locale.ephemeral]);
+      }
+    }
+
+    if (getOption('reset')) {
+      const name = getOption('reset');
+      await Settings.findOneAndUpdate(
+        { _id: interaction.guild.id },
+        { $unset: { name: '' } }
+      );
+
+      reply(
+        localization.settingReseted[NewLocale || locale.ephemeral].replace(
+          '{setting}',
+          `${name}`
+        )
+      );
     }
   },
 };

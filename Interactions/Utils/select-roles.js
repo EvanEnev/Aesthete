@@ -1,5 +1,4 @@
-const Settings = require('../../Schemas/Settings'),
-  createSelectRoles = require('./Functions/createSelectRoles'),
+const createSelectRoles = require('./Functions/createSelectRoles'),
   removeSelectRoles = require('./Functions/removeSelectRoles'),
   editSelectRoles = require('./Functions/editSelectRoles');
 const localization = require('../../Utils/localization');
@@ -7,13 +6,7 @@ const editMessage = require('./Functions/editMessage');
 
 module.exports = {
   name: 'select-roles',
-  run: async (interaction) => {
-    const settings = await Settings.findOne({
-      _id: interaction.guild.id,
-    });
-
-    const locale = settings?.locale || 'en';
-
+  run: async (interaction, locale) => {
     if (
       !(
         interaction.member.permissions.has('ADMINISTRATOR') ||

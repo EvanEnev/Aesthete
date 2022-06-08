@@ -22,14 +22,14 @@ module.exports = {
       if (error) {
         const channel =
           interaction.guild.publicUpdatesChannel ||
-          guild.channels.cache
+          interaction.guild.channels.cache
             .filter(
               (channel) =>
                 channel
-                  .permissionsFor(guild.client.user.id)
+                  .permissionsFor(interaction.client.user.id)
                   .has('SEND_MESSAGES') &&
                 channel
-                  .permissionsFor(guild.client.user.id)
+                  .permissionsFor(interaction.client.user.id)
                   .has('VIEW_CHANNEL') &&
                 channel.type === 'GUILD_TEXT'
             )
@@ -37,7 +37,7 @@ module.exports = {
             .first();
 
         channel.send({
-          content: localization.errors.noPermissionsForSelectroles[locale],
+          content: localization.errors.noPermissionsForSelectroles[locale.normal],
         });
       }
       await interaction.deferUpdate().catch(() => {});

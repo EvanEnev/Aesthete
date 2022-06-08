@@ -2,7 +2,7 @@ const { readdirSync, existsSync } = require('fs');
 
 module.exports = (client) => {
   readdirSync('./Interactions/').forEach((dir) => {
-    if (!existsSync('./Interactions/${dir}/Buttons')) return;
+    if (!existsSync(`./Interactions/${dir}/Buttons`)) return;
 
     const files = readdirSync(`./Interactions/${dir}/Buttons`).filter((file) =>
       file.endsWith('.js')

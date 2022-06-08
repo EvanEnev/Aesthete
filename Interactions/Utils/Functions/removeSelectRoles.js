@@ -18,7 +18,6 @@ module.exports = async (interaction, locale) => {
   const newComponents = [];
   let hasMenu = false;
   rows?.forEach((row, index) => {
-    console.log(row.components[0].type);
     if (row.components[0].type !== 'SELECT_MENU') {
       newComponents.push(rows[index]);
     } else {
