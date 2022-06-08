@@ -37,7 +37,7 @@ module.exports = {
             .first();
 
         channel.send({
-          content: localization.errors.noPermissionsForSelectroles[locale],
+          content: localization.errors.noPermissionsForSelectroles[locale.normal],
         });
       }
       await interaction.deferUpdate().catch(() => {});
