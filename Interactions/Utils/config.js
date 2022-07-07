@@ -91,7 +91,7 @@ module.exports = {
         { upsert: true }
       );
 
-      await interaction.reply({
+      await reply({
         content: `${
           localization.channelChanged[NewLocale || locale.ephemeral]
         } ${channel}`,
