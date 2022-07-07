@@ -24,20 +24,19 @@ module.exports = [
       },
       {
         type: 'BOOLEAN',
-        name: 'dm-member',
-        description:
-          'DM a member when possible for accept or reject a proposal',
+        name: 'dm-members',
+        description: 'DM a members when possible for accept or reject requests',
       },
       {
         type: 'CHANNEL',
         name: 'role-play-channel',
-        description: 'When the bot should send all role-play messages',
+        description: 'Where the bot should send all role-play messages',
         channelTypes: ['GUILD_TEXT'],
       },
       {
         type: 'CHANNEL',
-        name: 'marriages-channel',
-        description: 'When the bot should send marriage messages',
+        name: 'weddings-channel',
+        description: 'Where the bot should send weddings messages',
         channelTypes: ['GUILD_TEXT'],
       },
     ],

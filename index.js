@@ -29,10 +29,9 @@ client.tenor = tenor.client({
   DateFormat: 'D/MM/YYYY - H:mm:ss A',
 });
 
-client.interactions = new Collection();
-client.buttons = new Collection();
-client.selects = new Collection();
-client.autocompletes = new Collection();
+['interactions', 'buttons', 'selects', 'autocompletes'].forEach((name) => {
+  client[name] = new Collection();
+});
 
 const handlers = readdirSync('./Handlers').filter((file) =>
   file.endsWith('.js')

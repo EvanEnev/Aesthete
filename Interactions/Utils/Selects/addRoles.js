@@ -36,6 +36,7 @@ module.exports = {
             .sort((a, b) => a - b)
             .first();
 
+        console.debug(locale.normal)
         channel.send({
           content: localization.errors.noPermissionsForSelectroles[locale.normal],
         });

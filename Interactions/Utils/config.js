@@ -58,10 +58,10 @@ module.exports = {
     if (getOption('role-play-channel')) {
       if (
         !(
-          getOption('role-play-channel')
+          getOption('role-play-channel').channel
             .permissionsFor(interaction.client.user.id)
             .has('SEND_MESSAGES') &&
-          getOption('role-play-channel')
+          getOption('role-play-channel').channel
             .permissionsFor(interaction.client.user.id)
             .has('VIEW_CHANNEL')
         )
