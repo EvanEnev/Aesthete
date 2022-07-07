@@ -76,10 +76,12 @@ module.exports = {
           { upsert: true }
         );
 
+        const channel = getOption('role-play-channel').channel;
+
         reply(
           `${
             localization.channelChanged[NewLocale || locale.ephemeral]
-          } ${getOption('role-play-channel')}`
+          } ${channel}`
         );
       }
       await Settings.findOneAndUpdate(

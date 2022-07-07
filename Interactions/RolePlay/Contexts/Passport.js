@@ -1,7 +1,7 @@
-const localization = require('../../Utils/localization');
+const localization = require('../../../Utils/localization');
 const { MessageEmbed } = require('discord.js');
 const { colors } = require('../../Utils/config.js');
-const Members = require('../../Schemas/Members');
+const Members = require('../../../Schemas/Members');
 
 module.exports = {
   name: 'Passport',
