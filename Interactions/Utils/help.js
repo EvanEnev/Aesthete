@@ -7,7 +7,7 @@ module.exports = {
   run: async (interaction, locale) => {
     const embed = new MessageEmbed()
       .setColor(colors.default)
-      .setDescription(localization.description[locale]);
+      .setDescription(localization.description[locale.ephemeral]);
 
     const row = new MessageActionRow().addComponents(
       new MessageButton()

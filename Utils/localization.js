@@ -146,7 +146,7 @@ module.exports = {
           { name: 'Брак:', value: '{marriage}', inline: true },
         ],
         en: [
-          { name: 'Create:', value: '<t:{created}>', inline: true },
+          { name: 'Created:', value: '<t:{created}>', inline: true },
           { name: 'Joined:', value: '<t:{joined}>', inline: true },
           { name: '\u200B', value: '\u200B' },
           { name: 'About me:', value: '{about}', inline: true },

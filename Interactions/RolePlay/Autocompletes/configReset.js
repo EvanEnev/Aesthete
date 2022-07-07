@@ -2,34 +2,7 @@ module.exports = {
   name: 'config',
   run: async (interaction) => {
     const value = interaction.options.getFocused();
-    const defaultValues = [
-      'kill',
-      'hug',
-      'pat',
-      'test',
-      'anothertest',
-      'moretests',
-      'porta',
-      'portal2',
-      'half',
-      'half-life3',
-      'testsadkjhd',
-      'sjdhksd',
-      'khsgdjhsgd',
-      'kjsdgkjsgdkjshdkjhasdluadpfou',
-      'otieygljdgkhsgf',
-      'djfgkushdf',
-      'dksfgjhsdgf',
-      'dkjfgkjdgsfuhasf',
-      'oiweyrilhwerj',
-      'dsfoiywouieryu',
-      'rwutpoiwrtpoiwet',
-      'addnkjdfhkjsdhf',
-      'iqroiiqerowpeori',
-      'hsdkjfhsiodfuopweer',
-      'poqurpoiwer',
-      'oieqiuruiouer',
-    ];
+    const defaultValues = ['Language', 'DM Members'];
     let filtredValues = [];
     defaultValues.forEach((action) => {
       filtredValues.push({ name: action, value: action });
