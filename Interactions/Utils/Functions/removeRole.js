@@ -1,4 +1,3 @@
-const emojiRegex = require('emoji-regex');
 const localization = require('../../../Utils/localization');
 module.exports = async (interaction, locale, role, message) => {
   let components = message.components;
