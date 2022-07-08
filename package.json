@@ -7,7 +7,7 @@
     "chalk": "^5.0.1",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.1",
-    "emoji-regex": "^10.0.0",
+    "emoji-regex": "^10.1.0",
     "fs": "^0.0.1-security",
     "mongoose": "^6.0.13",
     "statcord.js": "^3.4.2",
