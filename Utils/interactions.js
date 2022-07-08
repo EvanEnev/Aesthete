@@ -313,6 +313,7 @@ module.exports = [
         type: 'USER',
         name: 'member',
         description: 'The member you want to hug',
+        required: true,
       },
       {
         type: 'STRING',
@@ -320,7 +321,6 @@ module.exports = [
         description: 'The words you want to say',
       },
     ],
-    member: true,
     locales: { en: 'hugs', ru: 'обнимает' },
   },
   {
@@ -332,6 +332,7 @@ module.exports = [
         type: 'USER',
         name: 'member',
         description: 'The member you want to kill',
+        required: true,
       },
       {
         type: 'STRING',
@@ -339,7 +340,6 @@ module.exports = [
         description: 'The words you want to say',
       },
     ],
-    member: true,
     locales: { en: 'kills', ru: 'убивает' },
   },
   {
@@ -351,6 +351,7 @@ module.exports = [
         type: 'USER',
         name: 'member',
         description: 'The member you want to hit',
+        required: true,
       },
       {
         type: 'STRING',
@@ -358,7 +359,6 @@ module.exports = [
         description: 'The words you want to say',
       },
     ],
-    member: true,
     locales: { en: 'hits', ru: 'ударяет' },
   },
   {
@@ -396,6 +396,7 @@ module.exports = [
         type: 'USER',
         name: 'member',
         description: 'The member you want to bite',
+        required: true,
       },
       {
         type: 'STRING',
@@ -403,7 +404,6 @@ module.exports = [
         description: 'The words you want to say',
       },
     ],
-    member: true,
     locales: { en: 'bites', ru: 'кусает' },
   },
   {
@@ -415,6 +415,7 @@ module.exports = [
         type: 'USER',
         name: 'member',
         description: 'The member you want to kiss',
+        required: true,
       },
       {
         type: 'STRING',
@@ -422,7 +423,6 @@ module.exports = [
         description: 'The words you want to say',
       },
     ],
-    member: true,
     locales: { en: 'kisses', ru: 'целует' },
   },
   {
@@ -434,6 +434,7 @@ module.exports = [
         type: 'USER',
         name: 'member',
         description: 'The member you want to pat',
+        required: true,
       },
       {
         type: 'STRING',
@@ -441,7 +442,6 @@ module.exports = [
         description: 'The words you want to say',
       },
     ],
-    member: true,
     locales: { en: 'pats', ru: 'гладит' },
   },
   {
@@ -462,4 +462,4 @@ module.exports = [
     ],
     locales: { en: 'angry at', ru: 'злиться на' },
   },
-];
+]

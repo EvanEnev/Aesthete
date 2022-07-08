@@ -1,5 +1,5 @@
-const Settings = require('../../Schemas/Settings');
-const localization = require('../../Utils/localization');
+const Settings = require('../../Schemas/Settings')
+const localization = require('../../Utils/localization')
 
 module.exports = {
   name: 'config',
@@ -13,8 +13,8 @@ module.exports = {
         : await interaction.reply({
             content,
             ephemeral: true,
-          });
-    };
+          })
+    }
 
     if (
       !(
@@ -27,105 +27,105 @@ module.exports = {
           localization.missingPermissions[locale.ephemeral] +
           localization.permissions.manageGuild[locale.ephemeral],
         ephemeral: true,
-      });
+      })
 
-    const settings = await Settings.findOne({ _id: interaction.guild.id });
+    const settings = await Settings.findOne({ _id: interaction.guild.id })
 
     const getOption = (property) => {
-      return interaction.options.get(property);
-    };
+      return interaction.options.get(property)
+    }
 
-    let NewLocale = '';
+    let NewLocale = ''
     if (getOption('languge')) {
-      const splitted = getOption('languge').split(' ');
+      const splitted = getOption('languge').split(' ')
       const LocaleCode = splitted[0],
-        LanguageName = splitted[1];
+        LanguageName = splitted[1]
 
       if (locale === LocaleCode) {
-        reply(localization.errors.botAlredyUseThisLocale[locale.ephemeral]);
+        reply(localization.errors.botAlredyUseThisLocale[locale.ephemeral])
       } else {
-        NewLocale = LocaleCode;
+        NewLocale = LocaleCode
         await Settings.findOneAndUpdate(
           { _id: interaction.guild.id },
           { locale: LocaleCode },
           { upsert: true }
-        );
+        )
 
-        reply(localization.languageChanged[LocaleCode] + LanguageName);
+        reply(localization.languageChanged[LocaleCode] + LanguageName)
       }
     }
 
     if (getOption('role-play-channel')) {
-      const channel = getOption('role-play-channel').channel;
+      const channel = getOption('role-play-channel').channel
 
       if (
         !(
-          getOption('role-play-channel').channel
-            .permissionsFor(interaction.client.user.id)
+          getOption('role-play-channel')
+            .channel.permissionsFor(interaction.client.user.id)
             .has('SEND_MESSAGES') &&
-          getOption('role-play-channel').channel
-            .permissionsFor(interaction.client.user.id)
+          getOption('role-play-channel')
+            .channel.permissionsFor(interaction.client.user.id)
             .has('VIEW_CHANNEL')
         )
       ) {
         reply(
           localization.errors.cannotSendMessages[NewLocale || locale.ephemeral]
-        );
+        )
       } else {
         await Settings.findOneAndUpdate(
           { _id: interaction.guild.id },
           { rolePlayChannelID: getOption('role-play-channel').id },
           { upsert: true }
-        );
+        )
 
         reply(
           `${
             localization.channelChanged[NewLocale || locale.ephemeral]
           } ${channel}`
-        );
+        )
       }
 
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
         { rolePlayChannelID: channel.id },
         { upsert: true }
-      );
+      )
 
-      await reply({
+      reply({
         content: `${
           localization.channelChanged[NewLocale || locale.ephemeral]
         } ${channel}`,
         ephemeral: true,
-      });
+      })
     }
 
     if (getOption('dm-members')) {
       if (settings?.dmMember) {
-        reply(localization.errors.botAlredyUseDMs[locale.ephemeral]);
+        reply(localization.errors.botAlredyUseDMs[locale.ephemeral])
       } else {
         await Settings.findOneAndUpdate(
           { _id: interaction.guild.id },
           { dmMembers: getOption('dm-members') },
           { upsert: true }
-        );
+        )
 
-        reply(localization.dmChanged[NewLocale || locale.ephemeral]);
+        reply(localization.dmChanged[NewLocale || locale.ephemeral])
       }
     }
 
     if (getOption('reset')) {
-      const name = getOption('reset');
+      const name = getOption('reset')
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
         { $unset: { name: '' } }
-      );
+      )
 
       reply(
         localization.settingReseted[NewLocale || locale.ephemeral].replace(
           '{setting}',
           `${name}`
         )
-      );
+      )
     }
   },
-};
+}
