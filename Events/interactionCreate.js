@@ -1,77 +1,78 @@
-const commandsData = require('../Utils/interactions');
-const Settings = require('../Schemas/Settings');
+const commandsData = require('../Utils/interactions')
+const Settings = require('../Schemas/Settings')
 module.exports = {
   name: 'interactionCreate',
   async run(interaction, client) {
-    if (!(interaction.guild || interaction.guild.available)) return;
-    let property;
+    if (!(interaction.guild || interaction.guild.available)) return
+    let property
 
     if (interaction.isButton()) {
-      property = 'buttons';
+      property = 'buttons'
     } else if (interaction.isSelectMenu()) {
-      property = 'selects';
+      property = 'selects'
     } else if (interaction.isCommand()) {
-      property = 'interactions';
+      property = 'interactions'
     } else if (interaction.isContextMenu()) {
-      property = 'contexts';
+      property = 'contexts'
     } else if (interaction.isAutocomplete()) {
-      property = 'autocompletes';
+      property = 'autocompletes'
     }
-
-    const action = client[property]?.get(
-      interaction.commandName || interaction.customId
-    );
-    if (!action) return;
 
     const settings = await Settings.findOne({
       _id: interaction.guild.id,
-    });
+    })
 
     const localeHandler = (localeName) => {
       const setLocale = () => {
-        let localeValue;
+        let localeValue
         const locale = (
           interaction[localeName]?.includes('-')
             ? interaction[localeName]?.slice(0, -3)
             : interaction[localeName]
-        ).toLowerCase();
+        ).toLowerCase()
 
         if (localeName === 'locale') {
           localeValue = ['ru', 'en'].includes(locale)
             ? locale
-            : settings?.locale;
+            : settings?.locale
         } else {
-          localeValue = settings?.locale || locale;
+          localeValue = settings?.locale || locale
         }
-        return localeValue;
-      };
+        return localeValue
+      }
 
-      return ['ru', 'en'].includes(setLocale()) ? setLocale() : 'en';
-    };
+      return ['ru', 'en'].includes(setLocale()) ? setLocale() : 'en'
+    }
 
     const locale = {
       normal: localeHandler('guildLocale'),
       ephemeral: localeHandler('locale'),
-    };
+    }
 
     if (property === 'interactions') {
       if (client.user.id !== '912631976282976287') {
         client.statcord.postCommand(
           interaction.commandName,
           interaction.user.id
-        );
+        )
       }
 
       const commandData = commandsData.find(
         (data) => data.name === interaction.commandName
-      );
+      )
 
       if (commandData?.category === 'roleplay') {
-        const file = require('../Interactions/RolePlay/index');
-        return file.run(interaction, locale);
+        const file = require('../Interactions/RolePlay/index')
+        return file.run(interaction, locale)
       }
     }
 
-    action.run(interaction, locale);
+    const action = client[property]?.get(
+      interaction.commandName || interaction.customId
+    )
+
+    if (!action) return
+
+    action.run(interaction, locale)
   },
-};
+}
