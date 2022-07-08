@@ -36,8 +36,8 @@ module.exports = {
     }
 
     let NewLocale = ''
-    if (getOption('languge')) {
-      const splitted = getOption('languge').value.split(' ')
+    if (getOption('language')) {
+      const splitted = getOption('language').value.split(' ')
       const LocaleCode = splitted[0],
         LanguageName = splitted[1]
 
