@@ -37,7 +37,7 @@ module.exports = {
 
     let NewLocale = ''
     if (getOption('languge')) {
-      const splitted = getOption('languge').split(' ')
+      const splitted = getOption('languge').value.split(' ')
       const LocaleCode = splitted[0],
         LanguageName = splitted[1]
 
@@ -51,7 +51,7 @@ module.exports = {
           { upsert: true }
         )
 
-        reply(localization.languageChanged[LocaleCode] + LanguageName)
+        reply(`${localization.languageChanged[LocaleCode]} ${LanguageName}`)
       }
     }
 
@@ -74,7 +74,7 @@ module.exports = {
       } else {
         await Settings.findOneAndUpdate(
           { _id: interaction.guild.id },
-          { rolePlayChannelID: getOption('role-play-channel').id },
+          { rolePlayChannelID: getOption('role-play-channel').channel.id },
           { upsert: true }
         )
 
@@ -105,7 +105,7 @@ module.exports = {
       } else {
         await Settings.findOneAndUpdate(
           { _id: interaction.guild.id },
-          { dmMembers: getOption('dm-members') },
+          { dmMembers: getOption('dm-members').value },
           { upsert: true }
         )
 
@@ -114,7 +114,7 @@ module.exports = {
     }
 
     if (getOption('reset')) {
-      const name = getOption('reset')
+      const name = getOption('reset').value
       await Settings.findOneAndUpdate(
         { _id: interaction.guild.id },
         { $unset: { name: '' } }
