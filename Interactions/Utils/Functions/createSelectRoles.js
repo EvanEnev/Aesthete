@@ -2,18 +2,18 @@ const {
   MessageEmbed,
   MessageActionRow,
   MessageSelectMenu,
-} = require('discord.js');
-const emojiRegex = require('emoji-regex');
-const localization = require('../../../Utils/localization');
+} = require('discord.js')
+const emojiRegex = require('emoji-regex')
+const localization = require('../../../Utils/localization')
 module.exports = async (interaction, locale) => {
   const getString = (optionName) => {
-    return interaction.options.getString(optionName);
-  };
+    return interaction.options.getString(optionName)
+  }
 
-  const embed = new MessageEmbed();
+  const embed = new MessageEmbed()
   const role = interaction.options.getRole('role'),
     channel = interaction.options.getChannel('channel'),
-    label = getString('label');
+    label = getString('label')
 
   const rawEmoji = getString('emoji')?.split(/ +/g)[0],
     messageContent = getString('message')?.replaceAll('\\n', '\n'),
@@ -23,11 +23,12 @@ module.exports = async (interaction, locale) => {
     embedThumbnail = getString('embed-thumbnail'),
     embedImage = getString('embed-image'),
     embedFooter = getString('embed-footer'),
-    embedTimestamp = interaction.options.getBoolean('embed-footer-timestamp');
+    embedTimestamp = interaction.options.getBoolean('embed-footer-timestamp')
 
+  console.debug(messageContent)
   const row = new MessageActionRow().addComponents(
     new MessageSelectMenu().setCustomId('addRoles').setMinValues(0)
-  );
+  )
 
   if (
     rawEmoji &&
@@ -39,31 +40,28 @@ module.exports = async (interaction, locale) => {
       label: label,
       value: role.id,
       emoji: rawEmoji,
-    });
+    })
   } else {
-    row.components[0].addOptions({ label: label, value: role.id });
+    row.components[0].addOptions({ label: label, value: role.id })
   }
 
   if (embedDescription || embedTitle) {
-    embed
-      .setColor(embedColor)
-      .setThumbnail(embedThumbnail)
-      .setImage(embedImage);
+    embed.setColor(embedColor).setThumbnail(embedThumbnail).setImage(embedImage)
 
     if (embedTitle) {
-      embed.setTitle(embedTitle);
+      embed.setTitle(embedTitle)
     }
 
     if (embedDescription) {
-      embed.setDescription(embedDescription);
+      embed.setDescription(embedDescription)
     }
 
     if (embedFooter) {
-      embed.setFooter(embedFooter);
+      embed.setFooter(embedFooter)
     }
 
     if (embedTimestamp) {
-      embed.setTimestamp();
+      embed.setTimestamp()
     }
   }
 
@@ -71,14 +69,14 @@ module.exports = async (interaction, locale) => {
     return interaction.reply({
       content: localization.errors.noMessageOrEmbed[locale],
       ephemeral: true,
-    });
+    })
   }
 
   if (interaction.guild.roles.everyone === role || role.managed) {
     return interaction.reply({
       content: localization.errors.unSupportedRole[locale],
       ephemeral: true,
-    });
+    })
   }
 
   if (embed.description || embed.title) {
@@ -86,16 +84,16 @@ module.exports = async (interaction, locale) => {
       content: messageContent,
       embeds: [embed],
       components: [row],
-    });
+    })
   } else {
     channel.send({
       content: messageContent,
       components: [row],
-    });
+    })
   }
 
   interaction.reply({
-    content: localization.selectRoles.selectRolesCreated[locale],
+    content: localization.selectRoles.selectRolesCreated[locale.ephemeral],
     ephemeral: true,
-  });
-};
+  })
+}
