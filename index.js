@@ -1,5 +1,5 @@
 require('dotenv').config();
-const chalk = require('chalk');
+// const chalk = require('chalk');
 const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
 const mongoose = require('mongoose');
@@ -47,7 +47,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log(chalk.blue('MongoDB connected'));
+    console.log(('MongoDB connected'));
   });
 
 process.on('unhandledRejection', (err) => {
@@ -76,11 +76,11 @@ function error(error) {
     ]);
 
   console.error(
-    chalk.red(`[${stack[0].replaceAll(':', '')}] ` + chalk.white(error.stack)),
+    (`[${stack[0].replaceAll(':', '')}] ` + (error.stack)),
     error
   );
 
   errorsChannel.send({ embeds: [embed] });
 }
 
-client.login(process.env.token);
+client.login(process.env.mainToken);
