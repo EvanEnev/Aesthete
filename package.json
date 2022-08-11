@@ -11,7 +11,7 @@
     "fs": "^0.0.1-security",
     "mongoose": "^6.0.13",
     "statcord.js": "^3.4.2",
-    "tenorjs": "^1.0.8"
+    "tenorjs": "^1.0.10"
   },
   "scripts": {
     "start": "node -r dotenv/config index.js",
